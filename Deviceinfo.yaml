@@ -1,0 +1,20 @@
+#                   Welcom to DeviceInfo config file 
+#
+# flow this Syntax to Config you Devices Information 
+#
+# NOITCE : becarefull don't write any sensitive information here like passwords or usenames
+#
+#          use  : automation.py -l or --login
+#          for enter and encypt all passwords
+
+# All Keys like (Host,Device) must write in Capital letter
+
+R1 :
+  - Host : '172.16.0.100'
+  - Device : 'cisco_ios'
+
+R2 : 
+  - Host : '172.16.0.110'
+  - Device : 'cisco_ios'
+
+
