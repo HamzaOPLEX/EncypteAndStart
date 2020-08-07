@@ -1,9 +1,9 @@
 from cryptography.fernet import Fernet
 from getpass import getpass
 
-
 class get_login:
-    def encrypt(self, username=str, password=str, secret=str):
+    @staticmethod
+    def encrypt(username, password, secret):
 
         def dothework(login_type, login_info):
             key = Fernet.generate_key()
@@ -29,18 +29,32 @@ class get_login:
                 dothework('secret', secret)
 
         return (username_encypted, password_encypted, secret_encypted)
+    @staticmethod
+    def decrypt(encryptedinfo):
 
-    def decrypt(self, key, encryptedobj):
-        cipher_suite = Fernet(key)
-        plaintext = cipher_suite.decrypt(encryptedobj)
-        return plaintext.decode()
+        plaintextlogin_info = []
 
+        for encObj in encryptedinfo : 
+            info_key = encObj[0]
+            info_data = encObj[1]
+            cipher_suite = Fernet(info_key)
+            plaintext = cipher_suite.decrypt(info_data).decode()
+            plaintextlogin_info.append(plaintext)
+        return plaintextlogin_info[0],plaintextlogin_info[1],plaintextlogin_info[2]
+
+    
+    def getCiscoLogin():
+        username = input('Enter Username :')
+        password = getpass('Enter Password :')
+        secret = getpass('Enter secret :')
+        return username,password,secret
 
 if __name__ == '__main__':
-    Username = getpass('Enter Username :')
+    Username = input('Enter Username :')
     Password = getpass('Enter Password :')
     Secret = getpass('Enter Secret :')
     login = get_login()
     u, p, s = login.encrypt(Username, Password, Secret)
-    a = login.decrypt(u[0], u[1])
-    print(a)
+    encryptedinfo = (u,p,s)
+    u, p, s = login.decrypt(encryptedinfo)
+    print(u,p,s)
